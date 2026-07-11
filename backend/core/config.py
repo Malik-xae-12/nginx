@@ -1,6 +1,10 @@
 import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# Prevent stale environment variables from overriding the values we want to use.
+for key in ("DATABASE_URL", "DB_SERVER", "DB_NAME", "DB_USER", "DB_PASSWORD"):
+    os.environ.pop(key, None)
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -10,10 +14,8 @@ class Settings(BaseSettings):
         extra="ignore"
     )
 
-    DB_SERVER: str = r"localhost\SQLEXPRESS"
-    DB_NAME: str = "TestDB"
-    DB_USER: str = "migration_user"
-    DB_PASSWORD: str = "Migration@123456"
+    DATABASE_URL: str = "mssql+pymssql://malik:admin%40123@network.database.windows.net/lab"
 
 
 settings = Settings()
+

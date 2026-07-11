@@ -1,23 +1,10 @@
-import urllib.parse
 from contextlib import contextmanager
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from core.config import settings
 
-# Raw ODBC connection string using Pydantic Settings
-CONNECTION_STRING = (
-    f"DRIVER={{ODBC Driver 18 for SQL Server}};"
-    f"SERVER={settings.DB_SERVER};"
-    f"DATABASE={settings.DB_NAME};"
-    f"UID={settings.DB_USER};"
-    f"PWD={settings.DB_PASSWORD};"
-    f"TrustServerCertificate=yes;"
-    f"Connection Timeout=30;"
-)
-
-# Convert connection string for SQLAlchemy
-params = urllib.parse.quote_plus(CONNECTION_STRING)
-DATABASE_URL = f"mssql+pyodbc:///?odbc_connect={params}"
+# Use the connection string directly from settings
+DATABASE_URL = settings.DATABASE_URL
 
 # Create engine and sessionmaker
 engine = create_engine(

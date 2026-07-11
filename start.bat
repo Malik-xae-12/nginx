@@ -16,13 +16,13 @@ timeout /t 2 >nul
 
 :: Start FastAPI backend
 echo [2/3] Starting FastAPI backend on port 8000...
-cd /d d:\domain\backend
-start /B "" python -m uvicorn main:app --host 127.0.0.1 --port 8000
+cd /d "%~dp0backend"
+start /B "" "%~dp0backend\venv\Scripts\python.exe" -m uvicorn main:app --host 127.0.0.1 --port 8000
 timeout /t 3 >nul
 
 :: Start Nginx
 echo [3/3] Starting Nginx on port 80...
-cd /d d:\domain\nginx
+cd /d "%~dp0nginx"
 start /B "" nginx.exe
 timeout /t 2 >nul
 
